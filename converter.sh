@@ -72,11 +72,12 @@ if [ $(bc <<< "$asp_ratio < $ENDRATIO") -eq 1 ]; then
     temp=$((temp*MAX_WIDTH/nw))
     nw=$(($MAX_WIDTH-$temp))
     nh=$MAX_HEIGHT
+    width=$nw
     if [ $DEBUG -eq 1 ]; then
       echo "SCALING A VERTICAL VIDEO!!!!!!!!!!!!!!!!!!!!!!!! temp: ${temp}"
     fi
   fi
-  params="-filter_complex [0:v]scale=$nw:$nh,pad=w=$temp+iw:x=$(($temp/2)):color=$color"
+  params="-filter_complex [0:v]scale=$width:$nh,pad=w=$temp+iw:x=$(($temp/2)):color=$color"
 
 elif [ $(bc <<< "$asp_ratio > $ENDRATIO") -eq 1 ]; then
 
@@ -92,11 +93,12 @@ elif [ $(bc <<< "$asp_ratio > $ENDRATIO") -eq 1 ]; then
     temp=$((temp*MAX_WIDTH/nw))
     nw=$MAX_WIDTH
     nh=$(($MAX_HEIGHT-$temp))
+    height=$nh
     if [ $DEBUG -eq 1 ]; then
       echo "SCALING A GORIZONTAL VIDEO!!!!!!!!!!!!!!!!!!!!!!!! temp: ${temp}"
     fi
   fi
-  params="-filter_complex [0:v]scale=$nw:$nh,pad=h=$temp+ih:y=$(($temp/2)):color=$color"
+  params="-filter_complex [0:v]scale=$nw:$height,pad=h=$temp+ih:y=$(($temp/2)):color=$color"
 
 fi
 
